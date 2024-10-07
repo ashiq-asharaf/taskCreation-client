@@ -9,33 +9,33 @@ class Api {
     this.version = "v1";
     this.isRefreshingToken = false;
 
-    // Singleton for Socket.io client
+    
     if (!Api.socketInstance) {
       Api.socketInstance = io('http://localhost:8080', {
         withCredentials: true,
         transports: ['websocket', 'polling'],
       });
 
-      // Listen for socket events
+      
       Api.socketInstance.on('taskCreated', (newTask) => {
         console.log('Task created:', newTask);
-        // Handle new task created (update state, etc.)
+        
       });
 
       Api.socketInstance.on('taskUpdated', (updatedTask) => {
         console.log('Task updated:', updatedTask);
-        // Handle task update (update state, etc.)
+        
       });
 
       Api.socketInstance.on('taskDeleted', (taskId) => {
         console.log('Task deleted:', taskId);
-        // Handle task deletion (update state, etc.)
+        
       });
     }
     
     this.socket = Api.socketInstance;
 
-    // Axios interceptor for handling token refresh
+  
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -174,7 +174,7 @@ class Api {
       headers: headers,
       data: isFileUpload ? args : JSON.stringify(args),
       url: url,
-      withCredentials: true, // Set to true for CORS cookies
+      withCredentials: true, 
     };
 
     axios(config)
